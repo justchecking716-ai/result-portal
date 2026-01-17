@@ -10,27 +10,27 @@
 
 <div class="container">
 
-  <!-- HEADER WITH LOGO -->
+  <!-- HEADER -->
   <header>
     <img src="logo.png" alt="Institute Logo">
-    <h2>Intellectual Institute of Management & Technology</h2>
+    <h2>INTELLECTUAL INSTITUTE OF MANAGEMENT & TECHNOLOGY</h2>
     <hr>
   </header>
 
-  <!-- SEARCH SECTION -->
+  <!-- SEARCH -->
   <div style="text-align:center;">
     <input type="text" id="rollInput" placeholder="Enter Roll Number">
     <button onclick="checkResult()">Check Result</button>
   </div>
 
-  <!-- RESULT SECTION -->
+  <!-- RESULT -->
   <div id="result" style="display:none;">
 
-    <h3 style="text-align:center;">STUDENT MARKSHEET</h3>
+    <h3 style="text-align:center;">STATEMENT OF MARKS</h3>
 
-    <p><b>Name:</b> Rahul Kumar</p>
-    <p><b>Roll No:</b> <span id="rollNo"></span></p>
-    <p><b>Course:</b> BBA</p>
+    <p><b>Student Name:</b> <span id="studentName"></span></p>
+    <p><b>Roll Number:</b> <span id="rollNo"></span></p>
+    <p><b>Course:</b> <span id="course"></span></p>
 
     <table>
       <tr>
@@ -39,31 +39,14 @@
         <th>External</th>
         <th>Total</th>
       </tr>
-      <tr>
-        <td>Management</td>
-        <td>25</td>
-        <td>60</td>
-        <td>85</td>
-      </tr>
-      <tr>
-        <td>Accounting</td>
-        <td>24</td>
-        <td>58</td>
-        <td>82</td>
-      </tr>
-      <tr>
-        <td>Economics</td>
-        <td>23</td>
-        <td>57</td>
-        <td>80</td>
-      </tr>
+      <tbody id="marksTable"></tbody>
     </table>
 
-    <p style="margin-top:10px;"><b>Result:</b> PASS</p>
+    <p style="margin-top:10px;"><b>Result:</b> <span id="finalResult"></span></p>
 
   </div>
 
-  <!-- PRINT BUTTON -->
+  <!-- PRINT -->
   <div class="print-btn">
     <button onclick="window.print()">Download / Print Result</button>
   </div>
@@ -71,16 +54,51 @@
 </div>
 
 <script>
-function checkResult() {
-  var roll = document.getElementById("rollInput").value;
+/* RESULT DATA */
+const results = {
+  "2213338555": {
+    name: "STUDENT NAME",
+    course: "COURSE NAME",
+    subjects: [
+      { sub: "Subject 1", int: 25, ext: 60 },
+      { sub: "Subject 2", int: 24, ext: 58 },
+      { sub: "Subject 3", int: 23, ext: 57 }
+    ],
+    result: "PASS"
+  }
+};
 
-  if (roll === "2213338555") {
-    document.getElementById("rollNo").innerText = roll;
-    document.getElementById("result").style.display = "block";
-  } else {
+function checkResult() {
+  const roll = document.getElementById("rollInput").value;
+  const data = results[roll];
+
+  if (!data) {
     alert("Result not found");
     document.getElementById("result").style.display = "none";
+    return;
   }
+
+  document.getElementById("studentName").innerText = data.name;
+  document.getElementById("rollNo").innerText = roll;
+  document.getElementById("course").innerText = data.course;
+  document.getElementById("finalResult").innerText = data.result;
+
+  const table = document.getElementById("marksTable");
+  table.innerHTML = "";
+
+  data.subjects.forEach(s => {
+    const total = s.int + s.ext;
+    table.innerHTML += `
+      <tr>
+        <td>${s.sub}</td>
+        <td>${s.int}</td>
+        <td>${s.ext}</td>
+        <td>${total}</td>
+      </tr>
+    `;
+  });
+
+  document.getElementById("result").style.display = "block";
 }
 </script>
 
