@@ -3,183 +3,83 @@
 <head>
   <meta charset="UTF-8">
   <title>Result Portal</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      margin: 0;
-      padding: 0;
-    }
-
-    header {
-      background: #ffffff;
-      text-align: center;
-      padding: 15px;
-      border-bottom: 2px solid #000;
-    }
-
-    header img {
-      width: 180px;
-    }
-
-    header h2 {
-      margin: 10px 0 5px;
-      font-size: 20px;
-    }
-
-    .container {
-      padding: 15px;
-    }
-
-    input {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      font-size: 16px;
-    }
-
-    button {
-      width: 100%;
-      padding: 10px;
-      font-size: 16px;
-      background: #0066cc;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #004c99;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 15px;
-      background: white;
-    }
-
-    table, th, td {
-      border: 1px solid black;
-    }
-
-    th, td {
-      padding: 8px;
-      text-align: center;
-      font-size: 14px;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    .result-header {
-      margin-top: 15px;
-      background: white;
-      padding: 10px;
-      border: 1px solid black;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<header>
-  <img src="logo.png" alt="Institute Logo">
-  <h2>Intellectual Institute of Management & Technology</h2>
-  <p><b>Grade Card / Statement of Marks</b></p>
-</header>
-
 <div class="container">
-  <input type="text" id="roll" placeholder="Enter Roll / Enrollment Number">
-  <button onclick="showResult()">View Result</button>
 
-  <div id="result" class="hidden">
+  <!-- HEADER WITH LOGO -->
+  <header>
+    <img src="logo.png" alt="Institute Logo">
+    <h2>Intellectual Institute of Management & Technology</h2>
+    <hr>
+  </header>
 
-    <div class="result-header">
-      <p><b>Name:</b> Shivam Kumar</p>
-      <p><b>Course:</b> Diploma in Electronics Engineering</p>
-      <p><b>Semester:</b> 5th</p>
-    </div>
+  <!-- SEARCH SECTION -->
+  <div style="text-align:center;">
+    <input type="text" id="rollInput" placeholder="Enter Roll Number">
+    <button onclick="checkResult()">Check Result</button>
+  </div>
+
+  <!-- RESULT SECTION -->
+  <div id="result" style="display:none;">
+
+    <h3 style="text-align:center;">STUDENT MARKSHEET</h3>
+
+    <p><b>Name:</b> Rahul Kumar</p>
+    <p><b>Roll No:</b> <span id="rollNo"></span></p>
+    <p><b>Course:</b> BBA</p>
 
     <table>
       <tr>
-        <th>Code</th>
         <th>Subject</th>
         <th>Internal</th>
         <th>External</th>
         <th>Total</th>
       </tr>
-
       <tr>
-        <td>DPEE501</td>
-        <td>Estimation and Specification</td>
-        <td>12</td>
-        <td>75</td>
-        <td>87</td>
-      </tr>
-
-      <tr>
-        <td>DPEE502</td>
-        <td>Switchgear and Protection</td>
-        <td>17</td>
-        <td>74</td>
-        <td>91</td>
-      </tr>
-
-      <tr>
-        <td>DPEE503</td>
-        <td>Embedded System</td>
-        <td>10</td>
-        <td>68</td>
-        <td>78</td>
-      </tr>
-
-      <tr>
-        <td>DPEE504</td>
-        <td>Electrical Workshop</td>
-        <td>18</td>
-        <td>49</td>
-        <td>67</td>
-      </tr>
-
-      <tr>
-        <td>DPEE505</td>
-        <td>Embedded System Lab</td>
-        <td>10</td>
-        <td>46</td>
-        <td>56</td>
-      </tr>
-
-      <tr>
-        <td>DPEE506</td>
-        <td>Electrical Installation Design Lab</td>
-        <td>18</td>
-        <td>42</td>
+        <td>Management</td>
+        <td>25</td>
         <td>60</td>
+        <td>85</td>
       </tr>
-
       <tr>
-        <th colspan="4">Grand Total</th>
-        <th>439</th>
+        <td>Accounting</td>
+        <td>24</td>
+        <td>58</td>
+        <td>82</td>
+      </tr>
+      <tr>
+        <td>Economics</td>
+        <td>23</td>
+        <td>57</td>
+        <td>80</td>
       </tr>
     </table>
 
     <p style="margin-top:10px;"><b>Result:</b> PASS</p>
 
   </div>
+
+  <!-- PRINT BUTTON -->
+  <div class="print-btn">
+    <button onclick="window.print()">Download / Print Result</button>
+  </div>
+
 </div>
 
 <script>
-function showResult() {
-  var roll = document.getElementById("roll").value;
+function checkResult() {
+  var roll = document.getElementById("rollInput").value;
 
   if (roll === "2213338555") {
-    document.getElementById("result").classList.remove("hidden");
+    document.getElementById("rollNo").innerText = roll;
+    document.getElementById("result").style.display = "block";
   } else {
     alert("Result not found");
+    document.getElementById("result").style.display = "none";
   }
 }
 </script>
