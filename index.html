@@ -1,11 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Result Portal</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
 <h2>Student Result Portal</h2>
 
 <input id="enroll" placeholder="Enter Enrollment No">
@@ -19,13 +11,48 @@ function showResult() {
   let e = document.getElementById("enroll").value;
   let s = results.find(r => r.enrollment == e);
 
-  document.getElementById("result").innerHTML = s
-    ? `<h3>${s.name}</h3>
-       <p>Course: ${s.course}</p>
-       <p>Result: ${s.result}</p>`
-    : "Result not found";
+  if (!s) {
+    document.getElementById("result").innerHTML = "Result not found";
+    return;
+  }
+
+  let total = 0;
+
+  let rows = s.subjects.map(sub => {
+    let subTotal = sub.internal + sub.external;
+    total += subTotal;
+    return `
+      <tr>
+        <td>${sub.code}</td>
+        <td>${sub.name}</td>
+        <td>${sub.internal}</td>
+        <td>${sub.external}</td>
+        <td>${subTotal}</td>
+      </tr>
+    `;
+  }).join("");
+
+  document.getElementById("result").innerHTML = `
+    <h3>${s.name}</h3>
+    <p><b>Father:</b> ${s.father}</p>
+    <p><b>Course:</b> ${s.course}</p>
+    <p><b>Semester:</b> ${s.semester}</p>
+
+    <table border="1" width="100%">
+      <tr>
+        <th>Code</th>
+        <th>Subject</th>
+        <th>Internal</th>
+        <th>External</th>
+        <th>Total</th>
+      </tr>
+      ${rows}
+    </table>
+
+    <h3>Grand Total: ${total}</h3>
+    <h3>Result: ${s.result}</h3>
+
+    <button onclick="window.print()">Print Marksheet</button>
+  `;
 }
 </script>
-
-</body>
-</html>
