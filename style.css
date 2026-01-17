@@ -1,10 +1,48 @@
 body {
-  font-family: Arial;
-  text-align: center;
+  font-family: Arial, sans-serif;
   background: #f4f4f4;
+}
+
+h2, h3 {
+  text-align: center;
 }
 
 input, button {
   padding: 10px;
   margin: 5px;
+}
+
+#result {
+  background: white;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+th, td {
+  padding: 8px;
+  text-align: center;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+@media print {
+  input, button {
+    display: none;
+  }
+  body {
+    background: white;
+  }
 }
